@@ -3,16 +3,13 @@ import os
 import json
 from dotenv import load_dotenv
 
-
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
     raise ValueError("GOOGLE_API_KEY is missing. Please check your .env file.")
 
-
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-pro")
-
 
 try:
     with open("memes.json", "r") as f:
@@ -55,24 +52,28 @@ def generate_meme_captions(prompt):
         print(f"🛠️ Gemini Raw Response: {response.text}")
 
         parsed_response = extract_json(response.text) or {
-            "top_text": None,
-            "bottom_text": None,
-            "template_name": None
+            "top_text": "Funny Meme",
+            "bottom_text": "Generated Text",
+            "template_name": meme_templates[0]["name"]
         }
 
-        top_text = parsed_response.get("top_text", "").strip()
-        bottom_text = parsed_response.get("bottom_text", "").strip()
-        template_name = parsed_response.get("template_name", "").strip().lower()
+        top_text = parsed_response.get("top_text")
+        bottom_text = parsed_response.get("bottom_text")
+        template_name = parsed_response.get("template_name")
 
-  
-        if not top_text or not bottom_text or template_name == "template name":
+        # Ensure values are strings and not None before stripping
+        top_text = str(top_text).strip() if top_text else "Top Text"
+        bottom_text = str(bottom_text).strip() if bottom_text else ""
+        template_name = str(template_name).strip().lower() if template_name else None
+
+        if not template_name or template_name == "template name":
             return None, None, None
 
         matching_template = next((m["name"] for m in meme_templates if m["name"].lower() == template_name), None)
 
         if not matching_template:
             print(f"⚠️ Template '{template_name}' not found in memes.json. Using fallback.")
-            matching_template = meme_templates[0]["name"]  
+            matching_template = meme_templates[0]["name"]
 
         return top_text, bottom_text, matching_template
 
