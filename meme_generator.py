@@ -8,7 +8,6 @@ from gemini_integration import generate_meme_captions
 
 app = FastAPI()
 
-
 try:
     with open("memes.json", "r") as f:
         meme_templates = json.load(f)
@@ -68,7 +67,7 @@ def create_meme(template_name, top_text, bottom_text, output_path="generated_mem
     top_position = tuple(meme_data["top_text_position"])
     bottom_position = tuple(meme_data["bottom_text_position"])
     max_width = img.width - 40  
-    
+
     top_lines = wrap_text(draw, top_text, font, max_width)
     bottom_lines = wrap_text(draw, bottom_text, font, max_width)
     
@@ -91,11 +90,14 @@ async def generate_meme(request: MemeRequest):
         # Generate captions using Gemini AI
         top_text, bottom_text, template_name = generate_meme_captions(request.prompt)
 
-        # Ensure values are not None
-        top_text = (top_text.strip() if isinstance(top_text, str) else "Top Text")
-        bottom_text = (bottom_text.strip() if isinstance(bottom_text, str) else "Bottom Text")
-        template_name = (template_name.strip() if isinstance(template_name, str) else None)
-        
+        # Debugging: Print raw response
+        print(f"🛠️ Gemini Raw Response: {top_text}, {bottom_text}, {template_name}")
+
+        # Ensure values are valid strings
+        top_text = str(top_text).strip() if top_text else "Top Text"
+        bottom_text = str(bottom_text).strip() if bottom_text else ""  
+        template_name = str(template_name).strip() if template_name else None
+
         if not template_name:
             return {"error": "Failed to determine meme template. Try again later."}
 
@@ -115,5 +117,5 @@ async def generate_meme(request: MemeRequest):
 
 if __name__ == "__main__":
     subprocess.Popen([
-        "uvicorn", "meme_generator:app", "--host", "127.0.0.1", "--port", "8000"
-    ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        "uvicorn", "meme_generator:app", "--host", "127.0.0.1", "--port", "8000", "--reload"
+    ])
