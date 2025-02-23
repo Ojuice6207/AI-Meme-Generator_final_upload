@@ -59,6 +59,9 @@ AI Meme Generator is a FastAPI-based meme creation tool that uses Google Gemini 
 ## 🎥 Demo Video
 📌 **[Watch the Demo Here](https://drive.google.com/file/d/1sA4SdqxqYj2ODpf_bDz0AVxJNeFa0uds/view?usp=sharing)**
 
+## PPT
+📌 **[PPT link](https://docs.google.com/presentation/d/1LACM4VhoFrcCkla9R5S376oLIyV2c8KzTkMN1MNgCRE/edit?usp=sharing)**
+
 ## 🤝 Contributing
 Feel free to submit pull requests! Open an issue if you find bugs.
 
