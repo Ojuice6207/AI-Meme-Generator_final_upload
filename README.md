@@ -48,12 +48,16 @@ AI Meme Generator is a FastAPI-based meme creation tool that uses Google Gemini 
 6️⃣ Open **http://127.0.0.1:8000/docs** in your browser to test the API.
 
 ## 📌 Usage
+- On opening **http://127.0.0.1:8000/docs**, click on post
+- Click on try it now
+- Enter the prompt in the given place and click on execute
+  OR
 - Send a `POST` request to `/generate-meme` with a text prompt.
 - The API will return a generated meme.
 - Download and share your AI-created meme!
 
 ## 🎥 Demo Video
-📌 **[Watch the Demo Here](YOUR_VIDEO_LINK)**
+📌 **[Watch the Demo Here](https://drive.google.com/file/d/1sA4SdqxqYj2ODpf_bDz0AVxJNeFa0uds/view?usp=sharing)**
 
 ## 🤝 Contributing
 Feel free to submit pull requests! Open an issue if you find bugs.
